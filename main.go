@@ -24,8 +24,9 @@ type authorizeResponse struct {
 }
 
 type getAPIResponse struct {
-	Title string `json:"title"`
-	Url   string `json:"url"`
+	Title    string `json:"title"`
+	Url      string `json:"url"`
+	ItemType string `json:"item_type"`
 }
 
 func main() {
@@ -97,7 +98,7 @@ func main() {
 		items := make([]getAPIResponse, 0)
 
 		for _, v := range apiRes.List {
-			items = append(items, getAPIResponse{Title: v.GivenTitle, Url: v.GivenURL})
+			items = append(items, getAPIResponse{Title: v.GivenTitle, Url: v.GivenURL, ItemType: "pocket"})
 		}
 
 		res, err := json.Marshal(items)
