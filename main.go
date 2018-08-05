@@ -29,7 +29,6 @@ type getAPIResponse struct {
 }
 
 func main() {
-
 	http.HandleFunc("/oauth/request", func(w http.ResponseWriter, r *http.Request) {
 		urls, ok := r.URL.Query()["redirect_url"]
 
@@ -107,7 +106,9 @@ func main() {
 		w.Write(res)
 	})
 
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), handlers.LoggingHandler(os.Stdout, http.DefaultServeMux)); err != nil {
+	if err := http.ListenAndServe(":"+os.Getenv("PORT"),
+		handlers.LoggingHandler(os.Stdout,
+			LimitHandler(http.DefaultServeMux))); err != nil {
 		log.Fatal("ListenAndServe", err)
 	}
 }
